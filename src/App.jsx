@@ -281,6 +281,23 @@ export default function App() {
 
       <div style={{ maxWidth: 480, margin: "0 auto", padding: "28px 16px 0" }}>
 
+        {/* SEO Hero */}
+        <div style={{
+          background: dark ? "linear-gradient(135deg, #0d1f0d, #0a150a)" : "linear-gradient(135deg, #e8f5e8, #d4ecd4)",
+          border: `1px solid ${dark ? "rgba(34,197,94,0.25)" : "rgba(34,197,94,0.3)"}`,
+          borderLeft: "4px solid #22c55e",
+          borderRadius: 16,
+          padding: "20px 22px",
+          marginBottom: 16,
+        }}>
+          <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 700, color: theme.accent, marginBottom: 10, lineHeight: 1.3 }}>
+            Izračunaj koliko kalorija ti je potrebno na dnevnom nivou
+          </h1>
+          <p style={{ fontSize: 13.5, lineHeight: 1.65, color: theme.textMuted, margin: 0 }}>
+            Unesi pol, godine, visinu, težinu i nivo aktivnosti — za nekoliko sekundi dobij <strong style={{ color: theme.text, fontWeight: 600 }}>BMI indeks</strong>, <strong style={{ color: theme.text, fontWeight: 600 }}>dnevni kalorijski unos</strong> za održavanje kilaže, lagani bulk ili cut, kao i <strong style={{ color: theme.text, fontWeight: 600 }}>preporučeni broj koraka</strong>. Kalkulacije su bazirane na Mifflin-St Jeor formuli i prilagođene tvom profilu.
+          </p>
+        </div>
+
         {/* Input Card */}
         <div className="card" style={{
           background: theme.card,
@@ -291,7 +308,7 @@ export default function App() {
           boxShadow: dark ? "0 4px 40px rgba(0,0,0,0.4)" : "0 4px 20px rgba(0,0,0,0.06)",
         }}>
           <div style={{ fontSize: 13, fontWeight: 600, color: theme.accent, letterSpacing: 1, marginBottom: 20, textTransform: "uppercase" }}>
-            Unesi podatke
+            Uneси podatke
           </div>
 
           {/* Gender */}
@@ -328,6 +345,7 @@ export default function App() {
                   value={form[f.key]}
                   min={f.min} max={f.max}
                   onChange={e => setForm({ ...form, [f.key]: e.target.value })}
+                  onBlur={e => { const v = parseFloat(e.target.value); if (!isNaN(v)) setForm({ ...form, [f.key]: String(Math.max(f.min, Math.min(f.max, v))) }); }}
                   style={{
                     background: theme.input,
                     border: `1px solid ${theme.inputBorder}`,
@@ -347,6 +365,7 @@ export default function App() {
               placeholder="70"
               value={form.weight}
               onChange={e => setForm({ ...form, weight: e.target.value })}
+              onBlur={e => { const v = parseFloat(e.target.value); if (!isNaN(v)) setForm({ ...form, weight: String(Math.max(20, Math.min(300, v))) }); }}
               style={{
                 background: theme.input,
                 border: `1px solid ${theme.inputBorder}`,
